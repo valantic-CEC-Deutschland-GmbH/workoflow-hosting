@@ -147,6 +147,7 @@ services:
 
   workoflow-mcp:
     image: patricks1987/workoflow-mcp:main
+    platform: linux/amd64
     ports:
       - "9006:9000"
     env_file:
@@ -163,6 +164,7 @@ services:
 
   workoflow-teams-bot:
     image: patricks1987/workoflow-teams-bot:main
+    platform: linux/amd64
     ports:
       - "3978:3978"
     restart: unless-stopped
