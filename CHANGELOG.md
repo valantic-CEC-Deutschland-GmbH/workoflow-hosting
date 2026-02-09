@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Cached call types: `atext_completion`, `aembedding`, `atranscription`
   - `acompletion` (chat completions) intentionally excluded — LiteLLM cache keys don't include `tools`/`functions`, which risks cross-user response leakage in multi-tenant agent workflows
 - `docs/litellm-guide.md` — comprehensive LiteLLM documentation covering architecture, configuration, and operational commands
+- `store_model_in_db: true` — enables managing model configurations via LiteLLM UI
+- `store_prompts_in_spend_logs: true` — logs prompts in spend logs for cost analysis and debugging
 
 ## 2026-01-30
 
