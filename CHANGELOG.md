@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-02-09
+
+### Changed
+- Removed `gpt-4o` model aliases — all traffic now routes through `gpt-4.1` deployments only
+- Fixed OpenAI deployment model from `openai/gpt-4o` to `openai/gpt-4.1`
+
+### Added
+- Redis response caching for LiteLLM (1h TTL)
+  - Cached call types: `atext_completion`, `aembedding`, `atranscription`
+  - `acompletion` (chat completions) intentionally excluded — LiteLLM cache keys don't include `tools`/`functions`, which risks cross-user response leakage in multi-tenant agent workflows
+- `docs/litellm-guide.md` — comprehensive LiteLLM documentation covering architecture, configuration, and operational commands
+
 ## 2026-01-30
 
 ### Changed
