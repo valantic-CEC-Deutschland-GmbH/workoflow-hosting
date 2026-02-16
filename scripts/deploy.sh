@@ -48,9 +48,11 @@ fi
 if [ "$ENV" = "prod" ]; then
     HOST="val-workoflow-prod"
     ENV_NAME="Production"
+    BRANCH="main"
 else
     HOST="val-workoflow-stage"
     ENV_NAME="Staging"
+    BRANCH="stage"
 fi
 
 echo ""
@@ -73,7 +75,7 @@ log_success "Successfully connected to ${HOST}"
 log_info "Starting deployment process..."
 echo ""
 
-ssh -t "$HOST" bash << 'ENDSSH'
+ssh -t "$HOST" DEPLOY_BRANCH="$BRANCH" bash << 'ENDSSH'
 set -euo pipefail
 
 # Colors for remote output
@@ -97,7 +99,7 @@ log_error() {
 
 log_info "Switching to docker user..."
 
-sudo -iu docker bash << 'DOCKEREOF'
+sudo -iu docker DEPLOY_BRANCH="$DEPLOY_BRANCH" bash << 'DOCKEREOF'
 set -euo pipefail
 
 # Colors for docker user output
@@ -127,8 +129,9 @@ log_info "Current branch: $(git branch --show-current)"
 log_info "Fetching latest changes from git..."
 git fetch origin
 
-log_info "Resetting to match remote (handles force pushes)..."
-git reset --hard origin/main
+log_info "Resetting to match remote branch: ${DEPLOY_BRANCH}..."
+git checkout "$DEPLOY_BRANCH"
+git reset --hard "origin/${DEPLOY_BRANCH}"
 
 log_success "Git sync completed successfully"
 
