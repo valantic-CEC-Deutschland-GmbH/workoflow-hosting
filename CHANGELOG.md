@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-03-04
+
+### Added
+- dbhub MCP server configuration (`.mcp.json`) for local database access via Claude Code
+- `dbhub.toml.example` template for database connection setup
+- `docker-compose.override.yml` for local-only port mappings (gitignored)
+  - Exposes `litellm-postgres` on host port 5433 for local tooling (dbhub, pgAdmin)
+  - Auto-merged by Docker Compose locally, never deployed to prod/stage
+
+### Changed
+- Updated `.gitignore` to exclude `dbhub.toml` (contains credentials) and `docker-compose.override.yml` (local-only)
+
 ## 2026-02-16
 
 ### Changed
