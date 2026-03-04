@@ -2,3 +2,5 @@
 workflows
 .idea
 logs
+dbhub.toml
+docker-compose.override.yml
