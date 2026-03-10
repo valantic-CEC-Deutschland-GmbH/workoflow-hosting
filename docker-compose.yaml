@@ -175,8 +175,8 @@ services:
       - LITELLM_API_KEY=${LITELLM_MASTER_KEY}
       - LITELLM_MODEL=gpt-4.1
       - WORKOFLOW_API_URL=http://host.docker.internal:3979
-      - WORKOFLOW_API_USER=${API_AUTH_USER}
-      - WORKOFLOW_API_PASSWORD=${API_AUTH_PASSWORD}
+      - WORKOFLOW_API_USER=${WORKOFLOW_API_USER}
+      - WORKOFLOW_API_PASSWORD=${WORKOFLOW_API_PASSWORD}
       - REDIS_URL=redis://redis:6379
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://phoenix:6006
       - OTEL_SERVICE_NAME=workoflow-orchestrator
