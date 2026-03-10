@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - `adk-orchestrator` service — Google ADK orchestrator container (`patricks1987/workoflow-orchestrator:main`) with LiteLLM, Redis, Phoenix dependencies and health checks
+- `API_AUTH_USER` and `API_AUTH_PASSWORD` env vars for orchestrator platform API authentication
 
 ## 2026-03-04
 
