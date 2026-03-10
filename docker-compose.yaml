@@ -162,6 +162,46 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  adk-orchestrator:
+    image: patricks1987/workoflow-orchestrator:main
+    container_name: adk-orchestrator
+    platform: linux/amd64
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    environment:
+      - LITELLM_BASE_URL=http://litellm:4000
+      - LITELLM_API_KEY=${LITELLM_MASTER_KEY}
+      - LITELLM_MODEL=gpt-4.1
+      - WORKOFLOW_API_URL=http://host.docker.internal:3979
+      - WORKOFLOW_API_USER=${API_AUTH_USER}
+      - WORKOFLOW_API_PASSWORD=${API_AUTH_PASSWORD}
+      - REDIS_URL=redis://redis:6379
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://phoenix:6006
+      - OTEL_SERVICE_NAME=workoflow-orchestrator
+      - LOG_LEVEL=INFO
+      - HOST=0.0.0.0
+      - PORT=8080
+      - AGENT_TIMEOUT_SECONDS=120
+      - AGENT_MAX_TOOL_CALLS=10
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      litellm:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      phoenix:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
   workoflow-teams-bot:
     image: patricks1987/workoflow-teams-bot:main
     platform: linux/amd64
