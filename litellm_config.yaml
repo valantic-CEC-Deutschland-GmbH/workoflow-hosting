@@ -17,6 +17,14 @@ model_list:
       rpm: 500
       tpm: 150000
 
+  # OpenAI deployment for gpt-5.4 (thinking model — reasoning params set per-agent in orchestrator)
+  - model_name: gpt-5.4
+    litellm_params:
+      model: openai/gpt-5.4
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 500
+      tpm: 150000
+
 router_settings:
   routing_strategy: simple-shuffle
   redis_host: litellm-redis
@@ -28,6 +36,8 @@ router_settings:
   cooldown_time: 60
   # Retry on different deployment when rate limited
   retry_after: 0
+  # Fallback from gpt-5.4 to gpt-4.1 if OpenAI gpt-5.4 is unavailable
+  fallbacks: [{"gpt-5.4": ["gpt-4.1"]}]
 
 litellm_settings:
   drop_params: true

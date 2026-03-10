@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## 2026-03-10
 
 ### Added
+- **GPT-5.4 model** in LiteLLM config — OpenAI-only deployment with fallback to gpt-4.1
+- Fallback rule: `gpt-5.4` → `gpt-4.1` if OpenAI is unavailable
+
+### Changed
+- LiteLLM image upgraded from `v1.80.5-stable` to `v1.81.9-stable`
+- Orchestrator `LITELLM_MODEL` set to `gpt-5.4` for stage testing
+
 - `adk-orchestrator` service — Google ADK orchestrator container (`patricks1987/workoflow-orchestrator:main`) with LiteLLM, Redis, Phoenix dependencies and health checks
 - `WORKOFLOW_API_USER`/`WORKOFLOW_API_PASSWORD` shared by bot and orchestrator for platform API auth
 - `WEBHOOK_AUTH_TOKEN` for orchestrator Bearer auth

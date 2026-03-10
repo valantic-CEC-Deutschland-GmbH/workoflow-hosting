@@ -173,7 +173,7 @@ services:
     environment:
       - LITELLM_BASE_URL=http://litellm:4000
       - LITELLM_API_KEY=${LITELLM_MASTER_KEY}
-      - LITELLM_MODEL=gpt-4.1
+      - LITELLM_MODEL=gpt-5.4
       - WORKOFLOW_API_URL=http://host.docker.internal:3979
       - WORKOFLOW_API_USER=${WORKOFLOW_API_USER}
       - WORKOFLOW_API_PASSWORD=${WORKOFLOW_API_PASSWORD}
@@ -304,7 +304,7 @@ services:
       retries: 10
 
   litellm:
-    image: ghcr.io/berriai/litellm:v1.80.5-stable
+    image: ghcr.io/berriai/litellm:v1.81.9-stable
     container_name: litellm
     ports:
       - "4000:4000"
