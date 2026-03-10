@@ -185,6 +185,7 @@ services:
       - PORT=8080
       - AGENT_TIMEOUT_SECONDS=120
       - AGENT_MAX_TOOL_CALLS=10
+      - WEBHOOK_AUTH_TOKEN=${WEBHOOK_AUTH_TOKEN}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
