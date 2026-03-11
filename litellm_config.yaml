@@ -25,6 +25,14 @@ model_list:
       rpm: 500
       tpm: 150000
 
+  # OpenAI embedding model for People Finder (Qdrant vector search)
+  - model_name: text-embedding-3-large
+    litellm_params:
+      model: openai/text-embedding-3-large
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 500
+      tpm: 1000000
+
 router_settings:
   routing_strategy: simple-shuffle
   redis_host: litellm-redis

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-03-11
+
+### Added
+- **Qdrant vector database** for orchestrator — Enables People Finder semantic search with health checks, resource limits (1GB), and gRPC support
+- **Embedding model** `text-embedding-3-large` added to LiteLLM config for vector search (500 RPM, 1M TPM)
+- **Decidalo integration** — `DECIDALO_BEARER_TOKEN` environment variable for employee data scraping
+
+### Changed
+- Orchestrator service now depends on Qdrant health check and receives `QDRANT_URL` and `EMBEDDING_MODEL` environment variables
+
 ## 2026-03-10
 
 ### Added
