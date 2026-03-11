@@ -206,7 +206,8 @@ services:
       - WEBHOOK_AUTH_TOKEN=${WEBHOOK_AUTH_TOKEN}
       - QDRANT_URL=http://qdrant:6333
       - EMBEDDING_MODEL=text-embedding-3-large
-      - DECIDALO_BEARER_TOKEN=${DECIDALO_BEARER_TOKEN}
+      - SEARXNG_URL=http://searxng:8080
+      - TIKA_URL=http://tika:9998
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:

@@ -9,10 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - **Qdrant vector database** for orchestrator — Enables People Finder semantic search with health checks, resource limits (1GB), and gRPC support
 - **Embedding model** `text-embedding-3-large` added to LiteLLM config for vector search (500 RPM, 1M TPM)
-- **Decidalo integration** — `DECIDALO_BEARER_TOKEN` environment variable for employee data scraping
-
 ### Changed
 - Orchestrator service now depends on Qdrant health check and receives `QDRANT_URL` and `EMBEDDING_MODEL` environment variables
+- Orchestrator connected to SearXNG and Tika for Web Agent (search + page reading)
+- Removed `DECIDALO_BEARER_TOKEN` from docker-compose — token is short-lived and must be passed interactively via the scraper CLI
 
 ## 2026-03-10
 
