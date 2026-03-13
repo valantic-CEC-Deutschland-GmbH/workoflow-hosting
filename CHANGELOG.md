@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-03-13
+
+### Added
+- **Phoenix PostgreSQL backend** — Added `phoenix-postgres` service for persistent trace storage. Phoenix now uses `PHOENIX_SQL_DATABASE_URL` instead of file-based storage, enabling Grafana to query orchestrator traces directly via SQL.
+
 ## 2026-03-11
 
 ### Added

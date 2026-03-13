@@ -10,6 +10,7 @@ volumes:
   litellm-data:
   litellm-postgres-data:
   litellm-redis-data:
+  phoenix-postgres-data:
 
 x-n8n-shared: &n8n-shared
   image: n8nio/n8n:latest
@@ -275,6 +276,22 @@ services:
       retries: 5
       start_period: 30s
 
+  phoenix-postgres:
+    image: postgres:17.5-alpine
+    container_name: phoenix-postgres
+    environment:
+      - POSTGRES_USER=${PHOENIX_POSTGRES_USER:-phoenix}
+      - POSTGRES_PASSWORD=${PHOENIX_POSTGRES_PASSWORD:-phoenix}
+      - POSTGRES_DB=${PHOENIX_POSTGRES_DB:-phoenix}
+    volumes:
+      - phoenix-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PHOENIX_POSTGRES_USER:-phoenix}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
   phoenix:
     image: arizephoenix/phoenix:latest
     container_name: phoenix
@@ -289,8 +306,12 @@ services:
       - COLLECTOR_OTLP_ENABLED=true
       - COLLECTOR_OTLP_GRPC_ENABLED=true
       - COLLECTOR_OTLP_HTTP_ENABLED=true
+      - PHOENIX_SQL_DATABASE_URL=postgresql://${PHOENIX_POSTGRES_USER:-phoenix}:${PHOENIX_POSTGRES_PASSWORD:-phoenix}@phoenix-postgres:5432/${PHOENIX_POSTGRES_DB:-phoenix}
     volumes:
       - phoenix-data:/data
+    depends_on:
+      phoenix-postgres:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:6006/projects').read()"]
