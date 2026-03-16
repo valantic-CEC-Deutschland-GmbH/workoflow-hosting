@@ -209,6 +209,11 @@ services:
       - EMBEDDING_MODEL=text-embedding-3-large
       - SEARXNG_URL=http://searxng:8080
       - TIKA_URL=http://tika:9998
+      - EVAL_OPENAI_API_KEY=${EVAL_OPENAI_API_KEY}
+      - EVAL_OPENAI_MODEL=gpt-4o-mini
+      - EVAL_INTERVAL_MINUTES=15
+      - PHOENIX_URL=http://phoenix:6006
+      - PHOENIX_PROJECT_NAME=workoflow-orchestrator
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
