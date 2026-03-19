@@ -17,7 +17,7 @@ ALl cloud services are ISO 27001, ISO 27018, BSI C5 certified.
  - minio (http://localhost:9001/)
  - redis (http://localhost:6379/)
  - postgres (jdbc 5432)
- - workoflow-teams-bot (https://github.com/patrickjaja/workoflow-bot)
+ - workoflow-bot (https://github.com/valantic-CEC-Deutschland-GmbH/workoflow-bot)
 
 # Services Cloud
  - MS Teams (https://admin.teams.microsoft.com/)

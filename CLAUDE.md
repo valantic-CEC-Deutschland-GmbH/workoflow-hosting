@@ -1,4 +1,4 @@
-# CLAUDE.md - workoflow-ai-setup
+# CLAUDE.md - workoflow-hosting
 
 ## Workoflow Integration Platform (Production)
 
