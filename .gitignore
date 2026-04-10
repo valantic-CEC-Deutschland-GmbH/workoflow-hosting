@@ -4,3 +4,4 @@ workflows
 logs
 dbhub.toml
 docker-compose.override.yml
+.playwright-mcp
