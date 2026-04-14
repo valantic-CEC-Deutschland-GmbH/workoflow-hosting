@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-04-14
+
+### Added
+- **Knowledge Base infrastructure** — Three new services for the orchestrator's Knowledge Base feature:
+  - **RustFS** (ports 9004/9007) — S3-compatible document storage for uploaded files
+  - **Docling** (port 5001) — Document parsing and conversion (PDF, DOCX to markdown)
+  - **Crawl4AI** (port 11235) — Web page crawling for sitemap-based content ingestion
+- Orchestrator now connects to all Knowledge Base services with proper health check dependencies
+- FastEmbed cache volume for the orchestrator to persist embedding model downloads
+
 ## 2026-03-18
 
 ### Fixed

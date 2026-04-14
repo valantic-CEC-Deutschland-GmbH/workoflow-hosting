@@ -66,6 +66,9 @@ ssh val-workoflow-prod "sudo -iu docker bash -c 'cd /home/docker/docker-setups/n
 | postgres | 5432 | Main database |
 | redis | 6379 | Cache/queue |
 | phoenix | 6006 | Observability/tracing |
+| rustfs | 9004 (API), 9007 (Console) | Knowledge Base document storage (S3-compatible) |
+| docling | 5001 | Knowledge Base document parsing (slow startup ~60s) |
+| crawl4ai | 11235 | Knowledge Base web crawling |
 
 ## Useful Commands
 

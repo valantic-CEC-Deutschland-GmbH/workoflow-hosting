@@ -11,6 +11,8 @@ volumes:
   litellm-postgres-data:
   litellm-redis-data:
   phoenix-postgres-data:
+  rustfs-data:
+  fastembed-cache:
 
 x-n8n-shared: &n8n-shared
   image: n8nio/n8n:latest
@@ -214,6 +216,19 @@ services:
       - EVAL_INTERVAL_MINUTES=15
       - PHOENIX_URL=http://phoenix:6006
       - PHOENIX_PROJECT_NAME=workoflow-orchestrator
+      # Knowledge Base
+      - RUSTFS_URL=http://rustfs:9000
+      - RUSTFS_ACCESS_KEY=${RUSTFS_ACCESS_KEY:-rustfs_access_key}
+      - RUSTFS_SECRET_KEY=${RUSTFS_SECRET_KEY:-rustfs_secret_key}
+      - RUSTFS_BUCKET=workoflow-knowledge-base
+      - DOCLING_URL=http://docling:5001
+      - KB_COLLECTION_NAME=knowledge_base
+      - KB_MAX_FILE_SIZE_MB=50
+      - KB_EMBEDDING_MODEL=text-embedding-3-large
+      - KB_EMBEDDING_DIMENSIONS=3072
+      - CRAWL4AI_URL=http://crawl4ai:11235
+      - CRAWL4AI_WEBHOOK_SECRET=${CRAWL4AI_WEBHOOK_SECRET:-crawl4ai-webhook-secret-change-me}
+      - CRAWL4AI_WEBHOOK_URL=http://adk-orchestrator:8080/api/kb/crawl/webhook
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -225,6 +240,14 @@ services:
         condition: service_healthy
       qdrant:
         condition: service_healthy
+      rustfs:
+        condition: service_healthy
+      docling:
+        condition: service_healthy
+      crawl4ai:
+        condition: service_healthy
+    volumes:
+      - fastembed-cache:/root/.cache/fastembed
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -278,6 +301,58 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:80/health"]
       interval: 10s
       timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Knowledge Base services (document storage, parsing, web crawling)
+  rustfs:
+    image: rustfs/rustfs:1.0.0-alpha.83
+    container_name: workoflow-rustfs
+    restart: unless-stopped
+    command: /data
+    ports:
+      - "9004:9000"   # API
+      - "9007:9001"   # Console (9005 taken by mcp-atlassian)
+    environment:
+      RUSTFS_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-rustfs_access_key}
+      RUSTFS_SECRET_KEY: ${RUSTFS_SECRET_KEY:-rustfs_secret_key}
+    volumes:
+      - rustfs-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9001/rustfs/console/index.html || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  docling:
+    image: ghcr.io/docling-project/docling-serve:v1.14.0
+    container_name: workoflow-docling
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      DOCLING_SERVE_ENABLE_UI: "true"
+      DOCLING_SERVE_MAX_SYNC_WAIT: "600"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:5001/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  crawl4ai:
+    image: unclecode/crawl4ai:latest
+    container_name: workoflow-crawl4ai
+    restart: unless-stopped
+    ports:
+      - "11235:11235"
+    shm_size: 1g
+    environment:
+      CRAWL4AI_API_TOKEN: ${CRAWL4AI_WEBHOOK_SECRET:-crawl4ai-webhook-secret-change-me}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11235/health || exit 1"]
+      interval: 10s
+      timeout: 10s
       retries: 5
       start_period: 30s
 
