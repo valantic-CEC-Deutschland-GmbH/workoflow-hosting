@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-04-20
+
+### Fixed
+- **Memory limits for Docling and LiteLLM** — Added container memory caps (2 GB for Docling, 1 GB for LiteLLM) to prevent unbounded memory growth during heavy workloads like bulk document indexing. Previously, processing 100+ documents could cause these services to consume all available RAM and swap (observed 2.7 GB and 3.8 GB swap usage respectively), degrading the entire server.
+
 ## 2026-04-14
 
 ### Added

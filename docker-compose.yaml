@@ -333,6 +333,12 @@ services:
     environment:
       DOCLING_SERVE_ENABLE_UI: "true"
       DOCLING_SERVE_MAX_SYNC_WAIT: "600"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:5001/health || exit 1"]
       interval: 10s
@@ -436,6 +442,12 @@ services:
     volumes:
       - ./litellm_config.yaml:/app/config.yaml
       - litellm-data:/app/data
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
     environment:
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
       - LITELLM_SALT_KEY=${LITELLM_SALT_KEY}
