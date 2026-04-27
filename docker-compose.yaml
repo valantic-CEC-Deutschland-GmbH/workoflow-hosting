@@ -232,6 +232,11 @@ services:
       - CRAWL4AI_URL=http://crawl4ai:11235
       - CRAWL4AI_WEBHOOK_SECRET=${CRAWL4AI_WEBHOOK_SECRET:-crawl4ai-webhook-secret-change-me}
       - CRAWL4AI_WEBHOOK_URL=http://adk-orchestrator:8080/api/kb/crawl/webhook
+      # Sentry
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENTRY_RELEASE=${SENTRY_RELEASE:-}
+      - SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT:-development}
+      - SENTRY_TRACES_SAMPLE_RATE=${SENTRY_TRACES_SAMPLE_RATE:-0.0}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
