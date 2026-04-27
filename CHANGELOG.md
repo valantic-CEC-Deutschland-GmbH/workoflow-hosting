@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-04-27
+
+### Fixed
+- **Increased memory limits for Docling and LiteLLM** — Docling raised from 2 GB to 4 GB and LiteLLM from 1 GB to 2 GB. Both services were running at ~82% memory usage at idle after the server RAM was doubled, leaving no headroom for actual workloads. Large PDF uploads were crashing Docling during parsing, causing "Server disconnected" errors.
+
 ## 2026-04-20
 
 ### Fixed
