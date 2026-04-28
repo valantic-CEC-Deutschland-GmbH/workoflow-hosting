@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-04-28
+
+### Fixed
+- **Knowledge Base PDF uploads timing out** — Added 2 Uvicorn workers to Docling so a slow PDF parse no longer blocks all other upload requests. Previously, Docling ran a single worker; if it got stuck, subsequent uploads would time out after 10 minutes with "Server disconnected without sending a response."
+
 ## 2026-04-27
 
 ### Fixed
