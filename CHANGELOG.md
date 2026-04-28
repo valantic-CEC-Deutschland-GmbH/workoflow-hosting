@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - **Knowledge Base PDF uploads timing out** — Added 2 Uvicorn workers to Docling so a slow PDF parse no longer blocks all other upload requests. Previously, Docling ran a single worker; if it got stuck, subsequent uploads would time out after 10 minutes with "Server disconnected without sending a response."
 - **Docling sync wait timeout doubled** — Increased `DOCLING_SERVE_MAX_SYNC_WAIT` from 600 to 1200 seconds. Large PDFs (e.g. 1.2 MB) were taking ~610 seconds to parse on CPU, just exceeding the previous limit
+- **Docling memory limit raised to 6 GB** — With 2 Uvicorn workers each loading ML models (~1.9 GB peak), the previous 4 GB limit caused OOM kills during PDF parsing
 
 ## 2026-04-27
 
