@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2026-04-29
+
+### Changed
+- **Streamlined developer documentation** — CLAUDE.md now references AGENTS.md. Detailed infrastructure docs moved to shared skills in `workoflow-skills` repo
+
+## 2026-04-28
+
+### Fixed
+- **Knowledge Base PDF uploads timing out** — Added 2 Uvicorn workers to Docling so a slow PDF parse no longer blocks all other upload requests. Previously, Docling ran a single worker; if it got stuck, subsequent uploads would time out after 10 minutes with "Server disconnected without sending a response."
+- **Docling sync wait timeout doubled** — Increased `DOCLING_SERVE_MAX_SYNC_WAIT` from 600 to 1200 seconds. Large PDFs (e.g. 1.2 MB) were taking ~610 seconds to parse on CPU, just exceeding the previous limit
+- **Docling memory limit raised to 6 GB** — With 2 Uvicorn workers each loading ML models (~1.9 GB peak), the previous 4 GB limit caused OOM kills during PDF parsing
+
+## 2026-04-27
+
+### Fixed
+- **Increased memory limits for Docling and LiteLLM** — Docling raised from 2 GB to 4 GB and LiteLLM from 1 GB to 2 GB. Both services were running at ~82% memory usage at idle after the server RAM was doubled, leaving no headroom for actual workloads. Large PDF uploads were crashing Docling during parsing, causing "Server disconnected" errors.
+
 ## 2026-04-20
 
 ### Fixed
